@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +15,18 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 
+import jakarta.annotation.PostConstruct;
+
 
 @Configuration
 public class KafkaConsumerConfig {
+	
+	private static Logger LOGGER = LogManager.getLogger(KafkaConsumerConfig.class);
+	
+	@PostConstruct
+	public void init() {
+		LOGGER.info("Initiated the kafkaConsumer Config, Server is {}",bootStrapServer);
+	}
 	
 	@Value("${spring.kafka.bootstrap-servers}")
 	private String bootStrapServer;
