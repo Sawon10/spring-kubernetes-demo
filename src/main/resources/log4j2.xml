@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="warn">
 	<Properties>
-		<Property name="basePath">C:\Users\SAWON\Documents\workspace-spring-tool-suite-4-4.11.0.RELEASE\spring-kubernetes-demo\logs</Property>
+		<Property name="basePath">logs</Property>
 	</Properties>
 
 	<Appenders>
 		<RollingFile name="fileLogger"
-			fileName="${basePath}\spring-kubernetes-demo.log"
-			filePattern="${basePath}\spring-kubernetes-demo-%d{yyyy-MM-dd}.log">
+			fileName="${basePath}/spring-kubernetes-demo.log"
+			filePattern="${basePath}/spring-kubernetes-demo-%d{yyyy-MM-dd}.log">
 			<PatternLayout>
 				<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
 				</pattern>
 			</PatternLayout>
 			<Policies>
-				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
 				<SizeBasedTriggeringPolicy size="10MB" />
 			</Policies>
 			<!-- Max 10 files will be created everyday -->
@@ -26,6 +27,9 @@
 		</RollingFile>
 	</Appenders>
 	<Loggers>
+		<logger name="com.project.kubernetes" level="info">
+			<appender-ref ref="fileLogger" />
+		</logger>
 		<Root level="info" additivity="false">
 			<appender-ref ref="fileLogger" />
 		</Root>

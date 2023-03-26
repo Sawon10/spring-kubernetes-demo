@@ -15,6 +15,8 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 
+import com.project.kubernetes.entity.MessageBody;
+
 import jakarta.annotation.PostConstruct;
 
 
@@ -41,13 +43,13 @@ public class KafkaConsumerConfig {
 	}
 	
 	@Bean
-	public ConsumerFactory<String, String> consumerFactory() {
+	public ConsumerFactory<String, MessageBody> consumerFactory() {
 		return new DefaultKafkaConsumerFactory<>(consumerConfig());
 	}
 	
 	@Bean
-	public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> listnerFactory() {
-		ConcurrentKafkaListenerContainerFactory<String, String>	factory = new ConcurrentKafkaListenerContainerFactory<>();
+	public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, MessageBody>> listnerFactory() {
+		ConcurrentKafkaListenerContainerFactory<String, MessageBody> factory = new ConcurrentKafkaListenerContainerFactory<>();
 		factory.setConsumerFactory(consumerFactory());
 		return factory;
 	}
